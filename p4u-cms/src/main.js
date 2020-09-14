@@ -1,8 +1,9 @@
 import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 
 require('@/assets/css/style.css')
 
@@ -12,6 +13,7 @@ import store from './store'
 
 // Install BootstrapVue
 Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 Vue.config.productionTip = false
 

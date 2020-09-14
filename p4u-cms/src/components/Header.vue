@@ -1,10 +1,6 @@
 <template>
   <header class="header">
-    <b-button v-b-toggle.nav aria-expanded="true" class="sidemenu__btn">
-      <span class="top"></span>
-      <span class="mid"></span>
-      <span class="bottom"></span>
-    </b-button>
+    <img src="@/assets/images/P4U-logo.png" width="100px" height="75px" class="logo">
 
     <div class="dropdown">
       <b-dropdown id="dropdown-user" variant="link" toggle-class="text-decoration-none" no-caret >
@@ -45,16 +41,10 @@ export default {
   background-color: #141619;
   height: 64px;
   position: relative;
-  .sidemenu__btn {
-    height: 100%;
-    width: 54px;
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .logo {
     float: left;
+    width: 100px;
+    height: 75px;
   }
   #dropdown-user {
     width: 54px;

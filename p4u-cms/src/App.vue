@@ -1,10 +1,13 @@
 <template>
-  <div id="app" v-bind:class="{'shiftContent': shiftContent }">
+  <div id="app">
+    <Header />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+import Header from "@/components/Header.vue";
 
 export default {
   name: 'app',
@@ -14,7 +17,7 @@ export default {
     }
   },
   components: {
- 
+    Header,
   }
 }
 </script>

@@ -55,7 +55,7 @@
             <div class="col-12">
               <div class="form-group">
                 <div class="p-t-20">
-                  <a href="/signup" class="btn btn-info" id="to-recover" type="button">
+                  <a href="/admin/signup" class="btn btn-info" id="to-recover" type="button">
                     <i class="fa fa-lock m-r-5"></i> Register
                   </a>
                   <button class="btn btn-success float-right" type="submit">Login</button>
@@ -79,18 +79,6 @@
 .logo {
   width: 200px;
   height: 150px;
-}
-.p-b-20 {
-  padding-bottom: 20px;
-}
-.m-t-20 {
-  margin-top: 20px;
-}
-.p-b-30 {
-  padding-bottom: 30px;
-}
-.p-t-20 {
-  padding-top: 20px;
 }
 </style>
 <script>

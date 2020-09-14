@@ -6,13 +6,32 @@
   margin: 0px;
   transition: margin 0.3s ease-in-out;
 }
-.shiftContent {
-  margin-left: 250px;
-}
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 img {
   width: 100%;
   height: auto;
+}
+
+.p-b-20 {
+  padding-bottom: 20px;
+}
+.m-t-20 {
+  margin-top: 20px;
+}
+.p-b-30 {
+  padding-bottom: 30px;
+}
+.p-t-20 {
+  padding-top: 20px;
+}
+.card-group .card {
+  max-width: 25%;
+}
+.card-deck .card {
+  max-width: calc(25% - 30px);
+}
+.col-md-4 {
+  float: left;
 }
