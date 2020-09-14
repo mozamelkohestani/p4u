@@ -1,48 +1,78 @@
 <template>
   <header class="header">
-    <b-button
-      v-b-toggle.nav
-      aria-expanded="true"
-      class="sidemenu__btn"
-    >
+    <b-button v-b-toggle.nav aria-expanded="true" class="sidemenu__btn">
       <span class="top"></span>
       <span class="mid"></span>
       <span class="bottom"></span>
     </b-button>
 
-    <a href="/login" alt="user" class="user">
-        <img src="@/assets/images/user.jpg">
-    </a>
+    <div class="dropdown">
+      <b-dropdown id="dropdown-user" variant="link" toggle-class="text-decoration-none" no-caret >
+        <template v-slot:button-content>
+          <a
+            href="javascript:void(0)"
+            alt="user"
+            class="user nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+            data-toggle="dropdown-user"
+            aria-haspopup="true"
+            aria-expanded="false"
+            no-caret
+          >
+            <img src="@/assets/images/user.jpg" />
+          </a>
+        </template>
+        <b-dropdown-item @click="logout">
+          <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
+        </b-dropdown-item>
+      </b-dropdown>
+    </div>
   </header>
 </template>
 
+<script>
+export default {
+  methods : {
+    logout () {
+      localStorage.removeItem('token')
+      this.$router.push("/login");
+    }
+  }
+}
+</script>
+
 <style lang="less">
 .header {
-    background-color: #141619;
+  background-color: #141619;
+  height: 64px;
+  position: relative;
+  .sidemenu__btn {
+    height: 100%;
+    width: 54px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+  }
+  #dropdown-user {
+    width: 54px;
+    float: right;
+    padding: 0px;
+    font-size: 0.875rem;
+    line-height: 64px;
     height: 64px;
-    position: relative;
-    .sidemenu__btn {
-        height: 100%;
-        width: 54px;
-        background-color: transparent;
-        border: none;
-        border-radius: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        float: left;
+    img {
+      border-radius: 50%;
     }
-    .user {
-        width: 54px;
-        float: right;
-        padding: 0px 15px;
-        font-size: 0.875rem;
-        line-height: 64px;
-        height: 64px;
-        img {
-            border-radius: 50%;
-        }
+    a {
+      padding: 0;
+      &:after {
+        display: none;
+      }
     }
+  }
 }
 .sidemenu {
   &__btn {

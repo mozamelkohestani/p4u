@@ -20,6 +20,47 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
+                  placeholder="Firstname"
+                  aria-label="Firstname"
+                  aria-describedby="basic-addon1"
+                  required
+                  v-model="firstname"
+                  name="firstName"
+                  :class="{ 'is-invalid': submitted && !firstname }"
+                />
+                <div
+                  v-show="submitted && !firstname"
+                  class="invalid-feedback"
+                >First name is required</div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-success text-white" id="basic-addon1">
+                    <i class="ti-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="surname"
+                  aria-label="surname"
+                  aria-describedby="basic-addon1"
+                  required
+                  v-model="surname"
+                  name="firstName"
+                  :class="{ 'is-invalid': submitted && !surname }"
+                />
+                <div v-show="submitted && !surname" class="invalid-feedback">surname is required</div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-success text-white" id="basic-addon1">
+                    <i class="ti-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
                   placeholder="Username"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
@@ -49,16 +90,35 @@
                 />
                 <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
               </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-warning text-white" id="basic-addon2">
+                    <i class="ti-pencil"></i>
+                  </span>
+                </div>
+                <input
+                  type="password"
+                  class="form-control form-control-lg"
+                  placeholder="Password Confirm"
+                  aria-label="Password  Confirm"
+                  aria-describedby="basic-addon1"
+                  required
+                  v-model="password_confirmation"
+                  name="passwordConfirm"
+                  :class="{ 'is-invalid': submitted && !password_confirmation }"
+                />
+                <div
+                  v-show="submitted && !password_confirmation"
+                  class="invalid-feedback"
+                >Password confrmation is required</div>
+              </div>
             </div>
           </div>
           <div class="row border-top border-secondary">
             <div class="col-12">
               <div class="form-group">
                 <div class="p-t-20">
-                  <a href="/signup" class="btn btn-info" id="to-recover" type="button">
-                    <i class="fa fa-lock m-r-5"></i> Register
-                  </a>
-                  <button class="btn btn-success float-right" type="submit">Login</button>
+                  <button class="btn btn-success float-right" type="submit">Register</button>
                 </div>
               </div>
             </div>
@@ -94,39 +154,45 @@
 }
 </style>
 <script>
-
-import { login } from '../manager/networkManager'
+import { register } from "../manager/networkManager";
 
 export default {
-  name: "app",
   data() {
     return {
       username: "",
       password: "",
+      password_confirmation: "",
+      firstname: "",
+      surname: "",
       submitted: false,
     };
   },
   methods: {
     async handleSubmit() {
       try {
-        const result = await login( this.username, this.password)
+        const result = await register(
+          this.firstName,
+          this.surname,
+          this.username,
+          this.password,
+          this.password_confirmation
+        );
         console.log(result);
         localStorage.setItem('token' , result.data.access_token);
         this.$router.push('/');
       } catch (e) {
-        alert('login or password is wrong')
         console.log(e);
       }
     },
-    check () {
-      const loggedIn = localStorage.getItem('token');
+    check() {
+      const loggedIn = localStorage.getItem("token");
       if (loggedIn) {
-        this.$router.push('/');
+        this.$router.push("/");
       }
-    }
+    },
   },
-  mounted () {
-    this.check()
-  }
+  mounted() {
+    this.check();
+  },
 };
 </script>

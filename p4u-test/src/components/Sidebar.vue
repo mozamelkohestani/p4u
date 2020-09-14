@@ -14,10 +14,10 @@
 
       <nav class="mb-3">
         <b-nav vertical>
-          <b-nav-item active href="/" >Home</b-nav-item>
-          <b-nav-item href="#link-1" >Stelle</b-nav-item>
-          <b-nav-item href="#link-2" >Events</b-nav-item>
-          <b-nav-item href="#link-2" >Produkten</b-nav-item>
+          <router-link active to="/" >Home</router-link>
+          <router-link to="/places" >Stelle</router-link>
+          <router-link to="/events" >Events</router-link>
+          <router-link to="/products" >Produkten</router-link>
         </b-nav>
       </nav>
     </b-sidebar>
@@ -27,7 +27,7 @@
 export default {
     methods : {
         shiftContent (visible) {
-            let app = document.getElementsByClassName("content");
+            let app = document.getElementById('content')
 
             if (visible)
             {
@@ -57,9 +57,9 @@ export default {
     align-items: center;
     line-height: 25px;
     opacity: 0.6;
-    &.active
-    {
+    &.router-link-exact-active {
         background-color: #27a9e3;
+        color: #ffffff!important;
         opacity: 1;
     }
     &:hover

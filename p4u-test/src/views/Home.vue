@@ -1,5 +1,5 @@
 <template>
-  <div class="content shiftContent">
+  <div id="content" class="shiftContent">
     <Header />
     <Sidebar />
   </div>
