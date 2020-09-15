@@ -2,10 +2,10 @@
   <div id="content" class="container m-t-20">
     <div class="col-12 p-b-30 m-t-20 clearfix">
       <h1 v-if="this.edit">Edit: "{{form.title}}"</h1>
-      <h1 v-else>Create a new Event</h1>
+      <h1 v-else>Create a new Product</h1>
       <b-button variant="primary">
         <router-link
-          :to="{ path: '/places/'+ placeId + '/events', params: {id: placeId } }"
+          :to="{ path: '/events/'+ placeId + '/products/' + eventId , params: {placeId: placeId, eventId: eventId } }"
           variant="info"
         >Back</router-link>
       </b-button>
@@ -13,7 +13,7 @@
     <div class="col-12 p-b-30 clearfix">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show" class="p-b-30 clearfix">
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-form-group id="input-group-1" label="Title:" label-for="input-1">
         <b-form-input
           id="input-1"
@@ -29,24 +29,29 @@
         <b-form-input id="input-2" v-model="form.description" required placeholder="Description"></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-3" label="Image link:" label-for="input-3">
+      <b-form-group
+        id="input-group-3"
+        label="Image link:"
+        label-for="input-3"
+        description="ex: https://picsum.photos/200"
+      >
         <b-form-input id="input-3" v-model="form.image" placeholder="Image link" required></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-4" label="Date:" label-for="input-4">
-        <b-form-datepicker id="input-4" v-model="form.date" placeholder="Date" required></b-form-datepicker>
+      <b-form-group id="input-group-4" label="Price:" description="price in Euro">
+        <b-form-input id="input-4" v-model="form.price" placeholder="Price" required></b-form-input>
       </b-form-group>
 
       <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger" class="m-r-20">Reset</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
   </div>
 </template>
 
 <script>
-import { eventCreate } from "../manager/networkManager";
-import { eventGet } from "../manager/networkManager";
-import { eventUpdate } from "../manager/networkManager";
+import { productCreate } from "../manager/networkManager";
+import { productGet } from "../manager/networkManager";
+import { productUpdate } from "../manager/networkManager";
 
 export default {
   props: {
@@ -56,6 +61,9 @@ export default {
     eventId: {
       type: String,
     },
+    productId: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -63,15 +71,15 @@ export default {
         title: "",
         description: "",
         image: "",
-        date: "",
+        price: "",
       },
       show: true,
       edit: false,
     };
   },
   mounted() {
-    if (this.placeId && this.eventId) {
-      eventGet(this.placeId, this.eventId)
+    if ((this.placeId && this.eventId, this.productId)) {
+      productGet(this.placeId, this.eventId, this.productId)
         .then((response) => {
           console.log(response);
           this.edit = true;
@@ -91,17 +99,21 @@ export default {
       }
     },
     async create(e) {
+      alert("create");
       e.preventDefault();
       try {
-        const result = await eventCreate(
+        const result = await productCreate(
           this.placeId,
+          this.eventId,
           this.form.title,
           this.form.description,
           this.form.image,
-          this.form.date
+          this.form.price
         );
         console.log(result);
-        this.$router.push("/places/" + this.placeId + "/events");
+        this.$router.push(
+          "/events/" + this.placeId + "/products/" + this.eventId
+        );
       } catch (e) {
         console.log(e);
       }
@@ -109,16 +121,19 @@ export default {
     async update(e) {
       e.preventDefault();
       try {
-        const result = await eventUpdate(
+        const result = await productUpdate(
           this.placeId,
           this.eventId,
+          this.productId,
           this.form.title,
           this.form.description,
           this.form.image,
           this.form.date
         );
         console.log(result);
-        this.$router.push("/places/" + this.placeId + "/events");
+        this.$router.push(
+          "/events/" + this.placeId + "/products/" + this.eventId
+        );
       } catch (e) {
         console.log(e);
       }

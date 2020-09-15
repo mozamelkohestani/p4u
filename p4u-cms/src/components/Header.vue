@@ -2,8 +2,8 @@
   <header class="header">
     <img src="@/assets/images/P4U-logo.png" width="100px" height="75px" class="logo">
 
-    <div class="dropdown">
-      <b-dropdown id="dropdown-user" variant="link" toggle-class="text-decoration-none" no-caret >
+    <div v-if="loggedIn" class="dropdown">
+      <b-dropdown id="dropdown-user" variant="link" toggle-class="text-decoration-none" no-caret>
         <template v-slot:button-content>
           <a
             href="javascript:void(0)"
@@ -14,11 +14,12 @@
             aria-expanded="false"
             no-caret
           >
-            <img src="@/assets/images/user.jpg" />
+          <img src="@/assets/images/user.jpg" />
           </a>
+          
         </template>
         <b-dropdown-item @click="logout">
-          <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
+          <b-icon icon="power"></b-icon> Logout
         </b-dropdown-item>
       </b-dropdown>
     </div>
@@ -27,6 +28,17 @@
 
 <script>
 export default {
+  data() {
+    return {
+      loggedIn: false,
+    };
+  },
+  mounted() {
+    let loggedIn = localStorage.getItem("token");
+    if (loggedIn) {
+      this.loggedIn = true;
+    }
+  },
   methods : {
     logout () {
       localStorage.removeItem('token')
@@ -111,5 +123,10 @@ export default {
       }
     }
   }
+}
+.dropdown-menu {
+  left: -55px!important;
+  line-height: 30px!important;
+  padding: 10px!important;
 }
 </style>

@@ -13,12 +13,23 @@ img {
   width: 100%;
   height: auto;
 }
-
+header {
+  position: sticky!important;
+  top: 0;
+  z-index: 101;
+}
+button a {
+  color: #ffffff !important;
+  display: block;
+}
 .p-b-20 {
   padding-bottom: 20px;
 }
 .m-t-20 {
   margin-top: 20px;
+}
+.m-r-20 {
+  margin-right: 20px;
 }
 .p-b-30 {
   padding-bottom: 30px;

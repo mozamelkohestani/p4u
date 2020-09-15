@@ -1,12 +1,15 @@
 <template>
   <div id="content" class="container">
     <div class="col-12 p-b-30 m-t-20 clearfix">
-      <h1>Events</h1>
+      <h1>Events of: "{{place.title}}"</h1>
       <b-button variant="primary">
         <router-link
-          :to="{ path: '/events/create/' + path[3], params: {placeId: path[3] } }"
+          :to="{ path: '/events/'+ id +'/create/', params: {placeId: id } }"
           variant="info"
         >Create</router-link>
+      </b-button>
+      <b-button variant="primary" class="m-r-20">
+        <router-link to="/" variant="primary">Back</router-link>
       </b-button>
     </div>
     <div class="col-12 p-b-30">
@@ -20,19 +23,20 @@
           class="mb-2"
         >
           <b-card-text>{{event.description}}</b-card-text>
+          <b-card-text>Date : {{formatDate(event.date)}}</b-card-text>
 
           <div class="buttons">
-            <a @click.prevent="removeEvent(path[3], event.id)" href>
+            <a @click.prevent="removeEvent(id, event.id)" href>
               <b-icon icon="trash"></b-icon>
             </a>
             <router-link
-              :to="{ path: '/events/edit/' + event.id , params: {id: event.id } }"
+              :to="{ path: '/events/'+ id +'/edit/' + event.id , params: {placeId: id, eventId: event.id } }"
               variant="info"
             >
               <b-icon icon="pencil"></b-icon>
             </router-link>
             <router-link
-              :to="{ path: '/places/'+ event.id + '/events/', params: {id: event.id } }"
+              :to="{ path: '/events/'+ id + '/products/' + event.id , params: {placeId: id, eventId: event.id } }"
               variant="info"
             >
               <b-icon icon="eye"></b-icon>
@@ -47,16 +51,24 @@
 <script>
 import { eventlist } from "../manager/networkManager";
 import { eventRemove } from "../manager/networkManager";
+import { placeGet } from "../manager/networkManager";
+
+import moment from "moment";
 
 export default {
+  props: {
+    id: {
+      type: String,
+    },
+  },
   data() {
     return {
       events: [],
-      path: window.location.pathname.split("/"),
+      place: {},
     };
   },
   computed: {},
-  methode: {
+  methods: {
     async removeEvent(placeId, eventId) {
       try {
         await eventRemove(placeId, eventId);
@@ -65,12 +77,26 @@ export default {
         console.log(e);
       }
     },
+    formatDate(value) {
+      if (value) {
+        return moment(String(value)).format("YYYY.MM.DD");
+      }
+    },
   },
   mounted() {
-    eventlist(this.path[3])
+    eventlist(this.id)
       .then((response) => {
         console.log(response);
         return (this.events = response.data);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+
+    placeGet(this.id)
+      .then((response) => {
+        console.log(response);
+        return (this.place = response.data);
       })
       .catch((error) => {
         console.log(error.response);

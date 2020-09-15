@@ -10,12 +10,13 @@ import Events from '../views/Events.vue'
 import CreateEvents from '../views/CreateEvents.vue'
 
 import Products from '../views/Products.vue'
+import CreateProducts from '../views/CreateProducts.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/admin',
+    path: '/',
     name: 'Home',
     component: Home
   },
@@ -25,7 +26,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/admin/signup',
+    path: '/signup',
     name: 'Sign up',
     component: Signup
   },
@@ -42,29 +43,56 @@ const routes = [
   {
     path: '/places/edit/:id',
     name: 'Edit Place',
+    props: true,
     component: CreatePlace
   },
   {
     path: '/places/:id/events',
     name: 'Events',
+    props: true,
     component: Events
   },
   {
-    path: '/events/create/:placeId',
+    path: '/events/:placeId/create',
     name: 'Create Events',
+    props: true,
     component: CreateEvents
+  },
+  {
+    path: '/events/:placeId/edit/:eventId',
+    name: 'Edit Events',
+    props: true,
+    component: CreateEvents
+  },
+  {
+    path: '/events/:placeId/products/:eventId',
+    name: 'Event Products',
+    props: true,
+    component: Products
+  },
+  {
+    path: '/events/:placeId/product/:eventId/create',
+    name: 'Create Product',
+    props: true,
+    component: CreateProducts
+  },
+  {
+    path: '/events/:placeId/product/:eventId/edit/:productId',
+    name: 'Edite Product',
+    props: true,
+    component: CreateProducts
   },
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL + '/admin',
+  base: process.env.BASE_URL ,
   routes
 })
 
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login', '/admin/signup'];
+  const publicPages = ['/login', '/signup'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('token');
 

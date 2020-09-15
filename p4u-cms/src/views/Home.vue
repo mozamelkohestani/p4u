@@ -4,7 +4,10 @@
       <h1>Places</h1>
       <b-button href="/places/create/" variant="primary">Create</b-button>
     </div>
-    <div class="col-12 p-b-30">
+    <div class="col-12 p-b-30 clearfix">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div class="row">
       <div v-for="(place, idx) in places" :key="idx" class="col-md-4 col-6 my-1">
         <b-card
           v-bind:title="place.title"

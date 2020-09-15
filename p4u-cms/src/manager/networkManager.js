@@ -59,7 +59,22 @@ const eventCreate = (id, title, description, image, date) =>
     date,
   });
 
+const eventGet = (placeId, eventId) => httpClient.get(PLACELIST + "/" + placeId + '/events/' + eventId );
+
 const eventRemove = (placeId, eventId) => httpClient.delete(PLACELIST + "/" + placeId + '/events/' + eventId );
+
+const eventUpdate = (placeId, eventId, title, description, image, date) => httpClient.post(PLACELIST + "/" + placeId + '/events/' + eventId, {title, description, image, date} );
+
+const productlist = (placeId, eventId) => httpClient.get(PLACELIST + "/" + placeId + '/events/' + eventId + '/products');
+
+const productCreate = (placeId, eventId, title, description, image, price) => httpClient.post(PLACELIST + "/" + placeId + '/events/' + eventId + '/products', {title, description, image, price});
+
+const removeProduct = (placeId, eventId, productId) => httpClient.delete(PLACELIST + "/" + placeId + '/events/' + eventId + '/products/' + productId);
+
+const productGet = (placeId, eventId, productId) => httpClient.get(PLACELIST + "/" + placeId + '/events/' + eventId + '/products/' + productId);
+
+const productUpdate = (placeId, eventId, productId, title, description, image, price) => httpClient.post(PLACELIST + "/" + placeId + '/events/' + eventId + '/products/' + productId, {title, description, image, price});
+
 
 export {
   login,
@@ -71,5 +86,12 @@ export {
   placeRemove,
   eventlist,
   eventCreate,
-  eventRemove
+  eventRemove,
+  eventGet,
+  eventUpdate,
+  productlist,
+  productCreate,
+  removeProduct,
+  productGet,
+  productUpdate
 };
